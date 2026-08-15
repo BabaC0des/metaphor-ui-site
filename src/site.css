@@ -583,11 +583,18 @@ code {
   background: var(--panel);
 }
 
-/* The large stage on a component's own page earns the grid. */
+/*
+ * The stage on a component's own page hugs its specimen rather than standing
+ * five times as wide around it. A stamp in an empty field is not a specimen.
+ */
 .preview-tall {
-  height: 200px;
+  width: fit-content;
+  min-width: 320px;
+  max-width: 100%;
+  height: auto;
+  min-height: 168px;
   margin-block-end: 8px;
-  padding: 28px;
+  padding: 30px;
   border: 1px solid var(--line);
   border-radius: 14px;
   background-image: radial-gradient(var(--line-strong) 1px, transparent 1px);
@@ -628,17 +635,22 @@ code {
 }
 
 .swatch .preview {
-  min-height: 104px;
+  height: 96px;
+  padding: 0;
   border: 1px solid var(--line);
   border-radius: 12px;
 }
 
 .chip {
   display: block;
-  width: 88px;
-  height: 52px;
-  border: 1px solid var(--line-strong);
-  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  border-radius: 11px;
+}
+
+.chip-frame {
+  width: 76px;
+  height: 76px;
 }
 
 .chip-frame {

@@ -79,13 +79,11 @@ export const CATALOG: Entry[] = [
     group: "Base",
     says: "Every piece of text in the library. Seven sizes, three tones, four weights, and no way to reach a value outside them.",
     shows: (
-      <Stack gap={1} align="center">
-        <Text size="32">Aa Bb Cc</Text>
-        <Text size="14" tone="label">
-          label
-        </Text>
-        <Text size="12" tone="muted">
-          muted
+      <Stack gap={1} attributes={{ style: { width: 280 } }}>
+        <Text size="25">Aa Bb Cc</Text>
+        <Text size="14">Aa Bb Cc Dd Ee</Text>
+        <Text size="12" tone="label">
+          Aa Bb Cc Dd Ee Ff Gg
         </Text>
       </Stack>
     ),
@@ -95,10 +93,8 @@ export const CATALOG: Entry[] = [
     group: "Base",
     says: "The drawn set. A name that is not in the union does not exist.",
     shows: (
-      <Inline gap={4} wrap justify="center">
-        {(
-          ["document", "folder", "terminal", "mail", "image", "chart", "person", "search"] as const
-        ).map((glyph) => (
+      <Inline gap={4}>
+        {(["document", "folder", "terminal", "mail", "image", "search"] as const).map((glyph) => (
           <Icon key={glyph} glyph={glyph} size={24} />
         ))}
       </Inline>
@@ -121,10 +117,15 @@ export const CATALOG: Entry[] = [
     group: "Base",
     says: "The only hairline in the library, so a rule stays one pixel and one token everywhere.",
     shows: (
-      <Stack gap={4} attributes={{ style: { width: 240 } }}>
+      <Stack gap={3} attributes={{ style: { width: 280 } }}>
+        <Text size="12" tone="label">
+          inset 0
+        </Text>
         <Divider />
+        <Text size="12" tone="label">
+          inset 24
+        </Text>
         <Divider inset={24} />
-        <Divider />
       </Stack>
     ),
   },
@@ -133,16 +134,16 @@ export const CATALOG: Entry[] = [
     group: "Base",
     says: "Carries an application class as a colour. Decoration, and hidden from assistive technology.",
     shows: (
-      <Stack gap={2}>
+      <Inline gap={5} attributes={{ style: { width: 280 } }} justify="center">
         {(["language", "library", "site", "spatial"] as const).map((appClass) => (
-          <Inline key={appClass} gap={2} align="center">
+          <Stack key={appClass} gap={2} align="center">
             <Dot appClass={appClass} size={8} />
-            <Text size="12" tone="label">
+            <Text size="11" tone="label">
               {appClass}
             </Text>
-          </Inline>
+          </Stack>
         ))}
-      </Stack>
+      </Inline>
     ),
   },
   {
@@ -247,9 +248,10 @@ export const CATALOG: Entry[] = [
     group: "Controls",
     says: "Exclusive by name. The group holds the choice, the dial only reports it.",
     shows: (
-      <Stack gap={3} align="start">
+      <Stack gap={3} align="start" attributes={{ style: { width: 280 } }}>
         <Radio defaultChecked name="when" label="Every hour" />
         <Radio name="when" label="Every day" />
+        <Radio name="when" disabled label="Never" />
       </Stack>
     ),
   },
@@ -323,11 +325,16 @@ export const CATALOG: Entry[] = [
     group: "Controls",
     says: "Answers to focus as well as the pointer, and Escape dismisses it wherever the focus happens to be.",
     shows: (
-      <Tooltip content="Short hint text">
-        <Button variant="outline" onClick={() => {}}>
-          Hover me
-        </Button>
-      </Tooltip>
+      <Stack gap={3} align="center" attributes={{ style: { width: 280 } }}>
+        <Tooltip content="Short hint text">
+          <Button variant="outline" onClick={() => {}}>
+            Hover me
+          </Button>
+        </Tooltip>
+        <Text size="11" tone="label">
+          Focus reaches it too, and Escape closes it
+        </Text>
+      </Stack>
     ),
   },
 
@@ -372,15 +379,19 @@ export const CATALOG: Entry[] = [
     group: "Window",
     says: "Roving focus, typeahead and the outside click from Radix. The trigger belongs to the menu rather than being passed in.",
     shows: (
-      <Menu
-        label="File"
-        items={[
-          { id: "new", label: "New window", shortcut: "N" },
-          { id: "open", label: "Open", shortcut: "O" },
-          { id: "rule" },
-          { id: "close", label: "Close" },
-        ]}
-      />
+      <Surface tone="chrome" radius="control" attributes={{ style: { width: 280, padding: 6 } }}>
+        <Inline gap={1}>
+          {(
+            [
+              ["File", ["New window", "Open", "Close"]],
+              ["Edit", ["Undo", "Redo"]],
+              ["View", ["As grid", "As list"]],
+            ] as const
+          ).map(([name, entries]) => (
+            <Menu key={name} label={name} items={entries.map((one) => ({ id: one, label: one }))} />
+          ))}
+        </Inline>
+      </Surface>
     ),
   },
 
@@ -448,9 +459,13 @@ export const CATALOG: Entry[] = [
     group: "Shell",
     says: "The pill at the bottom of a phone. A control only when it is given something to do.",
     shows: (
-      <div style={{ width: 200 }}>
-        <GestureBar />
-      </div>
+      <Surface tone="base" radius="window" attributes={{ style: { width: 168, paddingBlock: 8 } }}>
+        <Stack gap={2}>
+          <StatusBar clock="09:41" />
+          <div style={{ height: 34 }} />
+          <GestureBar />
+        </Stack>
+      </Surface>
     ),
   },
   {
@@ -553,9 +568,12 @@ export const CATALOG: Entry[] = [
     group: "Content",
     says: "Without a value it runs on its own, rather than creeping to ninety and stopping.",
     shows: (
-      <div style={{ width: 180 }}>
-        <ProgressBar value={62} label="Checking memory" />
-      </div>
+      <Stack gap={3} attributes={{ style: { width: 280 } }}>
+        <ProgressBar value={24} label="Checking memory" />
+        <ProgressBar value={62} label="Checking storage" />
+        <ProgressBar value={100} label="Checking display" />
+        <ProgressBar label="Loading" />
+      </Stack>
     ),
   },
   {
