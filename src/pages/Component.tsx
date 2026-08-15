@@ -1,8 +1,10 @@
 import { Preview } from "../Preview";
-import { storybookFor } from "../catalog";
+import { slug, storybookFor } from "../catalog";
 import type { Entry } from "../catalog";
 
-export function Component({ entry }: { entry: Entry }) {
+type Props = { entry: Entry; previous?: Entry | undefined; next?: Entry | undefined };
+
+export function Component({ entry, previous, next }: Props) {
   return (
     <>
       <p className="crumb">{entry.group}</p>
@@ -23,6 +25,24 @@ export function Component({ entry }: { entry: Entry }) {
           Open {entry.name} in the Storybook
         </a>
       </p>
+
+      <nav className="step-nav" aria-label="Neighbouring components">
+        {previous ? (
+          <a href={`#/components/${slug(previous.name)}`}>
+            <span>Previous</span>
+            {previous.name}
+          </a>
+        ) : (
+          <span />
+        )}
+
+        {next ? (
+          <a className="step-next" href={`#/components/${slug(next.name)}`}>
+            <span>Next</span>
+            {next.name}
+          </a>
+        ) : null}
+      </nav>
     </>
   );
 }

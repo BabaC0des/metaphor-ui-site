@@ -1,16 +1,28 @@
+import { Mark } from "../Chrome";
 import { Preview } from "../Preview";
 import { slug } from "../catalog";
 import type { Entry } from "../catalog";
 
 const START = [
-  { title: "Installation", says: "Add the package and the stylesheet", href: "#/installation" },
-  { title: "Our principles", says: "Six rules the library holds to", href: "#/principles" },
+  {
+    title: "Installation",
+    says: "The package and the stylesheet",
+    href: "#/installation",
+    mark: "page",
+  },
+  {
+    title: "Our principles",
+    says: "Six rules the library holds to",
+    href: "#/principles",
+    mark: "rules",
+  },
   {
     title: "Repository",
     says: "Source code and issues",
     href: "https://github.com/BabaC0des/metaphor",
+    mark: "code",
   },
-];
+] as const;
 
 export function Overview({ entries }: { entries: Entry[] }) {
   return (
@@ -26,7 +38,9 @@ export function Overview({ entries }: { entries: Entry[] }) {
       <div className="start">
         {START.map((one) => (
           <a key={one.title} className="start-card" href={one.href}>
-            <span className="start-mark" aria-hidden="true" />
+            <span className="start-mark">
+              <Mark shape={one.mark} />
+            </span>
             <span>
               <strong>{one.title}</strong>
               <em>{one.says}</em>

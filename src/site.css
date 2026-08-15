@@ -1,41 +1,56 @@
 /*
- * The site's own furniture. It deliberately does not use the library: a
- * documentation page dressed as an operating system makes it impossible to tell
- * what is the specimen and what is the shelf. The library appears inside the
- * preview cards and nowhere else.
+ * The site's own furniture. It deliberately does not use the library: a page
+ * dressed as the thing it documents makes the specimen and the shelf
+ * indistinguishable, and with five design languages on one switch it would make
+ * the switch meaningless.
  *
- * Its palette is therefore its own, and it is neutral on purpose.
+ * Being furniture is not the same as having no voice. Headings are set in the
+ * monospace an operating system ships, which is the one face this subject
+ * actually owns. The scale is fixed rather than picked per element. And there is
+ * no accent colour: the only emphasis is ink, because a library whose specimens
+ * carry colour should not be competing with its own shelf.
  */
 
 :root {
-  --ink: #14181a;
-  --ink-quiet: #5b6569;
-  --ink-faint: #8a9296;
+  --ink: #101416;
+  --ink-quiet: #565f63;
+  --ink-faint: #838c90;
   --page: #ffffff;
-  --panel: #fafbfb;
-  --line: #e6e9ea;
-  --line-strong: #d3d8da;
-  --mark: #1f6feb;
-  --shadow: 0 1px 2px rgb(20 24 26 / 6%), 0 8px 24px rgb(20 24 26 / 6%);
 
-  --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, system-ui, sans-serif;
+  /* A real step away from the page, so a stage reads as a stage. */
+  --panel: #f2f4f4;
+  --panel-deep: #e9ecec;
+  --line: #e2e6e7;
+  --line-strong: #cbd1d3;
+  --shadow: 0 1px 2px rgb(16 20 22 / 5%), 0 10px 28px rgb(16 20 22 / 7%);
+
+  --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
   --mono: ui-monospace, "SF Mono", "Cascadia Mono", "Roboto Mono", monospace;
 
+  /* One scale, a fifth apart at the top and a whole tone at the bottom. */
+  --t-display: 44px;
+  --t-head: 22px;
+  --t-lede: 17px;
+  --t-body: 15px;
+  --t-small: 14px;
+  --t-mark: 12px;
+
   --top: 60px;
-  --side: 272px;
-  --read: 60rem;
+  --side: 264px;
+  --read: 46rem;
+  --wide: 78rem;
 }
 
 :root[data-mode="dark"] {
-  --ink: #e7ecee;
-  --ink-quiet: #a3adb1;
-  --ink-faint: #6f797d;
-  --page: #0e1113;
-  --panel: #131719;
-  --line: #23292c;
-  --line-strong: #2f3639;
-  --mark: #64a0ff;
-  --shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 8px 24px rgb(0 0 0 / 32%);
+  --ink: #eaeff1;
+  --ink-quiet: #a6b0b4;
+  --ink-faint: #737d81;
+  --page: #0c0f10;
+  --panel: #171b1d;
+  --panel-deep: #1f2426;
+  --line: #23292b;
+  --line-strong: #333b3e;
+  --shadow: 0 1px 2px rgb(0 0 0 / 50%), 0 10px 28px rgb(0 0 0 / 35%);
 }
 
 * {
@@ -52,13 +67,19 @@ body {
   background: var(--page);
   color: var(--ink);
   font-family: var(--ui);
-  font-size: 15px;
+  font-size: var(--t-body);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
 
 a {
   color: inherit;
+}
+
+svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .sr {
@@ -71,7 +92,7 @@ a {
 }
 
 :focus-visible {
-  outline: 2px solid var(--mark);
+  outline: 2px solid var(--ink);
   outline-offset: 2px;
 }
 
@@ -87,9 +108,9 @@ a {
   display: flex;
   flex: none;
   align-items: center;
-  gap: var(--mt-space-5, 24px);
+  gap: 10px;
   height: var(--top);
-  padding-inline: 24px;
+  padding-inline: 16px;
   border-block-end: 1px solid var(--line);
   background: var(--page);
 }
@@ -97,43 +118,43 @@ a {
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 9px;
   font-family: var(--mono);
-  font-size: 15px;
+  font-size: var(--t-small);
   font-weight: 500;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
   text-decoration: none;
 }
 
 .brand-mark {
-  width: 18px;
-  height: 18px;
-  border: 2px solid var(--ink);
-  border-radius: 5px;
+  width: 20px;
+  height: 20px;
+  color: var(--ink);
 }
 
 .top-nav {
   display: flex;
-  gap: 4px;
-  margin-inline-start: 16px;
+  gap: 2px;
+  margin-inline-start: 12px;
 }
 
 .top-nav a {
-  padding: 6px 12px;
-  border: 1px solid transparent;
+  padding: 6px 11px;
   border-radius: 8px;
   color: var(--ink-quiet);
-  font-size: 14px;
+  font-size: var(--t-small);
   text-decoration: none;
 }
 
 .top-nav a:hover {
+  background: var(--panel);
   color: var(--ink);
 }
 
 .top-nav a.on {
-  border-color: var(--line-strong);
-  color: var(--ink);
+  background: var(--ink);
+  color: var(--page);
 }
 
 .top-tools {
@@ -143,63 +164,150 @@ a {
   margin-inline-start: auto;
 }
 
-.picker select,
-.ghost {
-  height: 32px;
-  padding-inline: 10px;
+/* One control, drawn once, so nothing in the header is left to the browser. */
+.control {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  padding-inline: 11px;
   border: 1px solid var(--line-strong);
-  border-radius: 8px;
+  border-radius: 9px;
   background: var(--page);
   color: var(--ink);
   font: inherit;
-  font-size: 13px;
+  font-size: var(--t-small);
   text-decoration: none;
   cursor: pointer;
 }
 
-.ghost {
-  display: inline-flex;
-  align-items: center;
+.control:hover {
+  background: var(--panel);
 }
 
-.ghost:hover,
-.picker select:hover {
+.control-square {
+  justify-content: center;
+  width: 34px;
+  padding: 7px;
+}
+
+.control-mark {
+  width: 0;
+  height: 0;
+  border-block-start: 4px solid currentcolor;
+  border-inline: 3.5px solid transparent;
+  opacity: 0.55;
+}
+
+.picker {
+  position: relative;
+}
+
+.pop {
+  position: absolute;
+  z-index: 20;
+  inset-block-start: calc(100% + 6px);
+  inset-inline-end: 0;
+  min-width: 168px;
+  margin: 0;
+  padding: 5px;
+  border: 1px solid var(--line-strong);
+  border-radius: 11px;
+  background: var(--page);
+  box-shadow: var(--shadow);
+  list-style: none;
+}
+
+.pop button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 7px 9px;
+  border: 0;
+  border-radius: 7px;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--t-small);
+  text-align: start;
+  cursor: pointer;
+}
+
+.pop button:hover {
   background: var(--panel);
+}
+
+.pop-tick {
+  width: 12px;
+  color: var(--ink-quiet);
+  font-size: var(--t-mark);
 }
 
 /* Sidebar */
 
 .body {
+  position: relative;
   display: grid;
   flex: 1;
   grid-template-columns: var(--side) minmax(0, 1fr);
   min-height: 0;
 }
 
-.side {
+.side,
+.drawer {
   overflow-y: auto;
-  padding: 20px 12px 64px 24px;
+  padding: 18px 12px 56px 20px;
+}
+
+.side {
   border-inline-end: 1px solid var(--line);
+
+  /* The list is longer than the screen, and it has to say so. */
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 40px), transparent);
+}
+
+.search {
+  position: relative;
+  display: block;
 }
 
 .search input {
   width: 100%;
   height: 34px;
-  padding-inline: 10px;
+  padding-inline: 10px 42px;
   border: 1px solid var(--line-strong);
-  border-radius: 8px;
+  border-radius: 9px;
   background: var(--panel);
   color: var(--ink);
   font: inherit;
-  font-size: 13px;
+  font-size: var(--t-small);
 }
 
+.search kbd {
+  position: absolute;
+  inset-block-start: 8px;
+  inset-inline-end: 8px;
+  padding: 1px 5px;
+  border: 1px solid var(--line-strong);
+  border-radius: 5px;
+  color: var(--ink-faint);
+  font-family: var(--mono);
+  font-size: 11px;
+}
+
+/*
+ * A group name is not a destination, so it does not carry more weight than the
+ * links under it. It was set heavier than every link on the page before.
+ */
 .side-group {
-  margin: 24px 0 8px;
-  color: var(--ink);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  margin: 22px 0 6px;
+  color: var(--ink-faint);
+  font-family: var(--mono);
+  font-size: var(--t-mark);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .side-list {
@@ -213,7 +321,7 @@ a {
   padding: 5px 10px;
   border-radius: 7px;
   color: var(--ink-quiet);
-  font-size: 14px;
+  font-size: var(--t-small);
   text-decoration: none;
 }
 
@@ -223,54 +331,86 @@ a {
 }
 
 .side-list a.on {
-  background: color-mix(in srgb, var(--mark) 10%, transparent);
-  color: var(--mark);
+  background: var(--panel-deep);
+  color: var(--ink);
   font-weight: 500;
+}
+
+.scrim {
+  position: fixed;
+  z-index: 30;
+  inset: var(--top) 0 0;
+  border: 0;
+  background: rgb(0 0 0 / 40%);
+}
+
+.drawer {
+  position: fixed;
+  z-index: 31;
+  inset: var(--top) 0 0;
+  border-inline-end: 1px solid var(--line);
+  background: var(--page);
 }
 
 /* Reading column */
 
 .main {
   overflow-y: auto;
-  padding: 40px 48px 96px;
+  padding: 36px 40px 96px;
 }
 
+/*
+ * Prose reads at one measure and a grid of specimens at another. Capping both
+ * at the reading measure is what turned a four column grid into two.
+ */
 .main > * {
   max-width: var(--read);
+}
+
+.main > .grid,
+.main > .swatches,
+.main > .start,
+.main > .preview-tall,
+.main > .step-nav {
+  max-width: var(--wide);
 }
 
 .crumb {
   margin: 0 0 6px;
   color: var(--ink-faint);
-  font-size: 13px;
+  font-family: var(--mono);
+  font-size: var(--t-mark);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 h1 {
-  margin: 0 0 12px;
-  font-size: 40px;
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
+  margin: 0 0 10px;
+  font-family: var(--mono);
+  font-size: var(--t-display);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
 }
 
 h2 {
-  margin: 48px 0 16px;
-  font-size: 20px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  margin: 44px 0 14px;
+  font-family: var(--mono);
+  font-size: var(--t-head);
+  font-weight: 500;
+  letter-spacing: -0.03em;
 }
 
 h3 {
   margin: 0;
-  font-size: 15px;
+  font-size: var(--t-body);
   font-weight: 600;
 }
 
 .lede {
-  margin: 0 0 16px;
-  max-width: 46rem;
+  margin: 0 0 14px;
   color: var(--ink-quiet);
-  font-size: 16px;
+  font-size: var(--t-lede);
 }
 
 .plain {
@@ -285,13 +425,13 @@ code {
   border-radius: 5px;
   background: var(--panel);
   font-family: var(--mono);
-  font-size: 0.87em;
+  font-size: 0.86em;
 }
 
 .code {
   overflow-x: auto;
-  margin: 0 0 16px;
-  padding: 16px 18px;
+  margin: 0 0 14px;
+  padding: 15px 17px;
   border: 1px solid var(--line);
   border-radius: 12px;
   background: var(--panel);
@@ -301,7 +441,7 @@ code {
   padding: 0;
   border: 0;
   background: none;
-  font-size: 13px;
+  font-size: var(--t-small);
   line-height: 1.7;
 }
 
@@ -309,29 +449,56 @@ code {
   display: inline-flex;
   align-items: center;
   height: 36px;
-  padding-inline: 14px;
+  padding-inline: 15px;
   border-radius: 9px;
-  background: var(--mark);
-  color: #fff;
-  font-size: 14px;
+  background: var(--ink);
+  color: var(--page);
+  font-size: var(--t-small);
   font-weight: 500;
   text-decoration: none;
+}
+
+.step-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-block-start: 56px;
+  padding-block-start: 18px;
+  border-block-start: 1px solid var(--line);
+}
+
+.step-nav a {
+  display: grid;
+  gap: 2px;
+  font-size: var(--t-small);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.step-nav span {
+  color: var(--ink-faint);
+  font-family: var(--mono);
+  font-size: var(--t-mark);
+}
+
+.step-next {
+  text-align: end;
 }
 
 /* Getting started cards */
 
 .start {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-  gap: 12px;
-  margin-block: 28px 8px;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 10px;
+  margin-block: 24px 4px;
 }
 
 .start-card {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 14px 16px;
+  padding: 13px 15px;
   border: 1px solid var(--line);
   border-radius: 12px;
   text-decoration: none;
@@ -344,22 +511,20 @@ code {
 
 .start-mark {
   flex: none;
-  width: 34px;
-  height: 34px;
-  border: 1px solid var(--line-strong);
-  border-radius: 9px;
-  background: var(--panel);
+  width: 20px;
+  height: 20px;
+  color: var(--ink-quiet);
 }
 
 .start-card strong {
   display: block;
-  font-size: 14px;
+  font-size: var(--t-small);
   font-weight: 600;
 }
 
 .start-card em {
   color: var(--ink-quiet);
-  font-size: 13px;
+  font-size: var(--t-mark);
   font-style: normal;
 }
 
@@ -367,15 +532,15 @@ code {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  gap: 16px;
 }
 
 .card {
   display: block;
-  padding: 0;
+  overflow: hidden;
   border: 1px solid var(--line);
-  border-radius: 14px;
+  border-radius: 13px;
   text-decoration: none;
 }
 
@@ -385,43 +550,43 @@ code {
 }
 
 .card h3 {
-  margin: 14px 18px 2px;
+  margin: 12px 16px 2px;
 }
 
 .card p {
-  margin: 0 18px 16px;
+  margin: 0 16px 14px;
   color: var(--ink-quiet);
-  font-size: 13px;
+  font-size: var(--t-mark);
   line-height: 1.5;
 }
 
 /*
- * The dotted ground says "specimen" without dressing the specimen. It belongs
- * to the site, not to the library, which is why it is drawn here.
+ * The stage. It is a full step darker than the page rather than a hair, and it
+ * carries no pattern: on a card the specimen fills a third of it at best, and a
+ * dot grid there was advertising the empty part.
  */
 .preview {
   display: grid;
   place-items: center;
   overflow: hidden;
-  min-height: 190px;
-  padding: 20px;
+  min-height: 132px;
+  padding: 16px;
   border-block-end: 1px solid var(--line);
-  border-start-start-radius: 13px;
-  border-start-end-radius: 13px;
-  background-color: var(--panel);
-  background-image: radial-gradient(var(--line-strong) 1px, transparent 1px);
-  background-position: -8px -8px;
-  background-size: 16px 16px;
+  background: var(--panel);
 }
 
+/* The large stage on a component's own page earns the grid. */
 .preview-tall {
-  min-height: 300px;
+  min-height: 280px;
   margin-block-end: 8px;
+  padding: 28px;
   border: 1px solid var(--line);
   border-radius: 14px;
+  background-image: radial-gradient(var(--line-strong) 1px, transparent 1px);
+  background-position: -9px -9px;
+  background-size: 18px 18px;
 }
 
-/* The stage itself has no ground of its own: the dots have to show through. */
 .preview-screen {
   display: grid;
   place-items: center;
@@ -434,32 +599,32 @@ code {
 
 .swatches {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  gap: 14px;
 }
 
 .swatch code {
   display: inline-block;
-  margin: 10px 0 2px;
-  font-size: 12px;
+  margin: 9px 0 2px;
+  font-size: var(--t-mark);
 }
 
 .swatch p {
-  margin: 0 0 8px;
+  margin: 0 0 6px;
   color: var(--ink-quiet);
-  font-size: 13px;
+  font-size: var(--t-mark);
 }
 
 .swatch .preview {
-  min-height: 120px;
+  min-height: 104px;
   border: 1px solid var(--line);
   border-radius: 12px;
 }
 
 .chip {
   display: block;
-  width: 72px;
-  height: 44px;
+  width: 88px;
+  height: 52px;
   border: 1px solid var(--line-strong);
   border-radius: 10px;
 }
@@ -509,7 +674,7 @@ code {
 
 .rules {
   display: grid;
-  gap: 20px;
+  gap: 18px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -517,38 +682,57 @@ code {
 
 .rules li {
   display: grid;
-  grid-template-columns: 42px minmax(0, 1fr);
+  grid-template-columns: 38px minmax(0, 1fr);
   gap: 12px;
-  padding-block-start: 16px;
+  padding-block-start: 15px;
   border-block-start: 1px solid var(--line);
 }
 
 .rules-count {
   color: var(--ink-faint);
   font-family: var(--mono);
-  font-size: 13px;
+  font-size: var(--t-small);
 }
 
 .rules p {
   margin: 4px 0 0;
   color: var(--ink-quiet);
-  font-size: 14px;
+  font-size: var(--t-small);
+}
+
+/* Which parts of the header exist at which width */
+
+.only-narrow {
+  display: none;
 }
 
 @media (width < 62rem) {
+  :root {
+    --t-display: 34px;
+    --t-head: 20px;
+  }
+
   .body {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .side {
+  .side,
+  .top-nav,
+  .only-wide {
     display: none;
   }
 
-  .main {
-    padding: 28px 20px 72px;
+  .only-narrow {
+    display: inline-flex;
   }
 
-  .top-nav {
+  .main {
+    padding: 24px 18px 72px;
+  }
+}
+
+@media (width < 26rem) {
+  .brand-name {
     display: none;
   }
 }

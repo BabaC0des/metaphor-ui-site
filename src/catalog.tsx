@@ -79,10 +79,13 @@ export const CATALOG: Entry[] = [
     group: "Base",
     says: "Every piece of text in the library. Seven sizes, three tones, four weights, and no way to reach a value outside them.",
     shows: (
-      <Stack gap={2} align="center">
-        <Text size="25">Aa</Text>
-        <Text size="12" tone="label">
+      <Stack gap={1} align="center">
+        <Text size="32">Aa Bb Cc</Text>
+        <Text size="14" tone="label">
           label
+        </Text>
+        <Text size="12" tone="muted">
+          muted
         </Text>
       </Stack>
     ),
@@ -92,10 +95,12 @@ export const CATALOG: Entry[] = [
     group: "Base",
     says: "The drawn set. A name that is not in the union does not exist.",
     shows: (
-      <Inline gap={3}>
-        <Icon glyph="folder" size={24} />
-        <Icon glyph="terminal" size={24} />
-        <Icon glyph="search" size={24} />
+      <Inline gap={4} wrap justify="center">
+        {(
+          ["document", "folder", "terminal", "mail", "image", "chart", "person", "search"] as const
+        ).map((glyph) => (
+          <Icon key={glyph} glyph={glyph} size={24} />
+        ))}
       </Inline>
     ),
   },
@@ -104,25 +109,34 @@ export const CATALOG: Entry[] = [
     group: "Base",
     says: "Every plane, from the desktop behind everything to the dialog above it. Four tones, five elevations, three radii.",
     shows: (
-      <Surface tone="raised" elevation={2} attributes={{ style: { width: 120, height: 64 } }} />
+      <Inline gap={3} align="center">
+        <Surface tone="chrome" attributes={{ style: { width: 76, height: 76 } }} />
+        <Surface tone="raised" elevation={2} attributes={{ style: { width: 76, height: 76 } }} />
+        <Surface tone="sunken" attributes={{ style: { width: 76, height: 76 } }} />
+      </Inline>
     ),
   },
   {
     name: "Divider",
     group: "Base",
     says: "The only hairline in the library, so a rule stays one pixel and one token everywhere.",
-    shows: <Divider attributes={{ style: { width: 140 } }} />,
+    shows: (
+      <Stack gap={4} attributes={{ style: { width: 240 } }}>
+        <Divider />
+        <Divider inset={24} />
+        <Divider />
+      </Stack>
+    ),
   },
   {
     name: "Dot",
     group: "Base",
     says: "Carries an application class as a colour. Decoration, and hidden from assistive technology.",
     shows: (
-      <Inline gap={3}>
-        <Dot appClass="language" />
-        <Dot appClass="library" />
-        <Dot appClass="site" />
-        <Dot appClass="spatial" />
+      <Inline gap={5}>
+        {(["language", "library", "site", "spatial"] as const).map((appClass) => (
+          <Dot key={appClass} appClass={appClass} size={8} />
+        ))}
       </Inline>
     ),
   },
@@ -131,11 +145,28 @@ export const CATALOG: Entry[] = [
     group: "Base",
     says: "Children in a column or a row, spaced from the scale and nowhere else.",
     shows: (
-      <Stack gap={2}>
-        <Surface tone="chrome" radius="control" attributes={{ style: { width: 96, height: 16 } }} />
-        <Surface tone="chrome" radius="control" attributes={{ style: { width: 96, height: 16 } }} />
-        <Surface tone="chrome" radius="control" attributes={{ style: { width: 96, height: 16 } }} />
-      </Stack>
+      <Inline gap={3} align="start">
+        <Stack gap={2}>
+          {[0, 1, 2].map((at) => (
+            <Surface
+              key={at}
+              tone="chrome"
+              radius="control"
+              attributes={{ style: { width: 104, height: 22 } }}
+            />
+          ))}
+        </Stack>
+        <Stack gap={2}>
+          {[0, 1].map((at) => (
+            <Surface
+              key={at}
+              tone="sunken"
+              radius="control"
+              attributes={{ style: { width: 60, height: 34 } }}
+            />
+          ))}
+        </Stack>
+      </Inline>
     ),
   },
 
@@ -162,25 +193,45 @@ export const CATALOG: Entry[] = [
     name: "SearchField",
     group: "Controls",
     says: "A pill in every design language. It clears itself on Escape and never masks.",
-    shows: <SearchField placeholder="Search" />,
+    shows: (
+      <Stack gap={3} align="start">
+        <SearchField placeholder="Search" />
+        <SearchField placeholder="Search" defaultValue="Terminal" />
+      </Stack>
+    ),
   },
   {
     name: "Switch",
     group: "Controls",
     says: "On and off, as a button with a switch role rather than a hidden checkbox.",
-    shows: <Switch defaultChecked label="Reduce motion" />,
+    shows: (
+      <Stack gap={3} align="start">
+        <Switch defaultChecked label="Reduce motion" />
+        <Switch label="Show previews" />
+      </Stack>
+    ),
   },
   {
     name: "Checkbox",
     group: "Controls",
     says: "On, off and mixed. The mixed box reports itself as mixed rather than as off with a bar drawn.",
-    shows: <Checkbox defaultChecked label="Show hidden files" />,
+    shows: (
+      <Stack gap={3} align="start">
+        <Checkbox defaultChecked label="Show hidden files" />
+        <Checkbox indeterminate label="Include folders" />
+      </Stack>
+    ),
   },
   {
     name: "Radio",
     group: "Controls",
     says: "Exclusive by name. The group holds the choice, the dial only reports it.",
-    shows: <Radio defaultChecked label="Every hour" />,
+    shows: (
+      <Stack gap={3} align="start">
+        <Radio defaultChecked name="when" label="Every hour" />
+        <Radio name="when" label="Every day" />
+      </Stack>
+    ),
   },
   {
     name: "Slider",
@@ -378,7 +429,12 @@ export const CATALOG: Entry[] = [
     name: "DesktopIcon",
     group: "Shell",
     says: "A tile with its name under it. It opens on a single press: nobody double clicks a web page.",
-    shows: <DesktopIcon name="Documents" glyph="folder" onOpen={() => {}} />,
+    shows: (
+      <Inline gap={2}>
+        <DesktopIcon name="Documents" glyph="folder" onOpen={() => {}} />
+        <DesktopIcon name="Photos" glyph="image" appClass="spatial" selected onOpen={() => {}} />
+      </Inline>
+    ),
   },
   {
     name: "HomeGrid",
