@@ -158,7 +158,8 @@ export function App() {
           </a>
 
           <nav className="top-nav" aria-label="Sections">
-            <a className={!entry && at === "overview" ? "on" : ""} href="#/overview">
+            {/* A component page is documentation, so the tab stays marked there. */}
+            <a className={at === "installation" ? "" : "on"} href="#/overview">
               Documentation
             </a>
             <a className={at === "installation" ? "on" : ""} href="#/installation">

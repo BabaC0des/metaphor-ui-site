@@ -133,11 +133,16 @@ export const CATALOG: Entry[] = [
     group: "Base",
     says: "Carries an application class as a colour. Decoration, and hidden from assistive technology.",
     shows: (
-      <Inline gap={5}>
+      <Stack gap={2}>
         {(["language", "library", "site", "spatial"] as const).map((appClass) => (
-          <Dot key={appClass} appClass={appClass} size={8} />
+          <Inline key={appClass} gap={2} align="center">
+            <Dot appClass={appClass} size={8} />
+            <Text size="12" tone="label">
+              {appClass}
+            </Text>
+          </Inline>
         ))}
-      </Inline>
+      </Stack>
     ),
   },
   {
@@ -175,19 +180,34 @@ export const CATALOG: Entry[] = [
     group: "Controls",
     says: "Three variants, two heights. Without a handler it renders as a span: a button that does nothing should not be announced as one.",
     shows: (
-      <Inline gap={2}>
-        <Button onClick={() => {}}>Continue</Button>
-        <Button variant="outline" onClick={() => {}}>
-          Cancel
-        </Button>
-      </Inline>
+      <Stack gap={3} align="center">
+        <Inline gap={2}>
+          <Button onClick={() => {}}>Continue</Button>
+          <Button variant="outline" onClick={() => {}}>
+            Cancel
+          </Button>
+        </Inline>
+        <Inline gap={2}>
+          <Button size="small" variant="quiet" onClick={() => {}}>
+            Learn more
+          </Button>
+          <Button size="small" disabled onClick={() => {}}>
+            Disabled
+          </Button>
+        </Inline>
+      </Stack>
     ),
   },
   {
     name: "Field",
     group: "Controls",
     says: "One line of text. Masking is left to the native password input, and the submit arrow exists only when there is something to submit.",
-    shows: <Field placeholder="Account name" attributes={{ style: { width: 180 } }} />,
+    shows: (
+      <Stack gap={3} attributes={{ style: { width: 236 } }}>
+        <Field placeholder="Account name" />
+        <Field type="password" autofill defaultValue="123456789" />
+      </Stack>
+    ),
   },
   {
     name: "SearchField",
@@ -237,21 +257,35 @@ export const CATALOG: Entry[] = [
     name: "Slider",
     group: "Controls",
     says: "A native range with the filled track drawn over it, so dragging, the arrow keys and touch all come for free.",
-    shows: <Slider defaultValue={62} label="Volume" attributes={{ style: { width: 180 } }} />,
+    shows: (
+      <Stack gap={4} attributes={{ style: { width: 236 } }}>
+        <Slider defaultValue={24} label="Brightness" />
+        <Slider defaultValue={62} label="Volume" />
+        <Slider defaultValue={100} label="Contrast" />
+      </Stack>
+    ),
   },
   {
     name: "Select",
     group: "Controls",
     says: "The native list, because type-ahead and the touch conventions are worth borrowing rather than imitating.",
     shows: (
-      <Select
-        items={[
-          { id: "one", label: "Every hour" },
-          { id: "two", label: "Every day" },
-        ]}
-        defaultValue="one"
-        label="Frequency"
-      />
+      <Stack gap={3}>
+        <Select
+          items={[
+            { id: "one", label: "Every hour" },
+            { id: "two", label: "Every day" },
+          ]}
+          defaultValue="one"
+          label="Frequency"
+        />
+        <Select
+          items={[{ id: "one", label: "Every hour" }]}
+          placeholder="Pick one"
+          defaultValue=""
+          label="Empty"
+        />
+      </Stack>
     ),
   },
   {

@@ -18,7 +18,7 @@
   --page: #ffffff;
 
   /* A real step away from the page, so a stage reads as a stage. */
-  --panel: #f2f4f4;
+  --panel: #eff1f2;
   --panel-deep: #e9ecec;
   --line: #e2e6e7;
   --line-strong: #cbd1d3;
@@ -76,7 +76,14 @@ a {
   color: inherit;
 }
 
-svg {
+/*
+ * This site's own marks, and only those. Written as a bare svg rule it reached
+ * every glyph the library draws and blew a 24 pixel icon up to the width of its
+ * card.
+ */
+.brand-mark svg,
+.start-mark svg,
+.control svg {
   display: block;
   width: 100%;
   height: 100%;
@@ -153,8 +160,8 @@ svg {
 }
 
 .top-nav a.on {
-  background: var(--ink);
-  color: var(--page);
+  background: var(--panel-deep);
+  color: var(--ink);
 }
 
 .top-tools {
@@ -537,7 +544,8 @@ code {
 }
 
 .card {
-  display: block;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 13px;
@@ -569,15 +577,15 @@ code {
   display: grid;
   place-items: center;
   overflow: hidden;
-  min-height: 132px;
-  padding: 16px;
+  height: 132px;
+  padding: 12px;
   border-block-end: 1px solid var(--line);
   background: var(--panel);
 }
 
 /* The large stage on a component's own page earns the grid. */
 .preview-tall {
-  min-height: 280px;
+  height: 200px;
   margin-block-end: 8px;
   padding: 28px;
   border: 1px solid var(--line);
@@ -587,7 +595,11 @@ code {
   background-size: 18px 18px;
 }
 
-.preview-screen {
+/*
+ * Named twice, because Screen's own background rule carries the same weight and
+ * the stage has to show through.
+ */
+.preview-screen.preview-screen {
   display: grid;
   place-items: center;
   overflow: visible;
@@ -731,7 +743,7 @@ code {
   }
 }
 
-@media (width < 26rem) {
+@media (width < 22rem) {
   .brand-name {
     display: none;
   }
