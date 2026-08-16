@@ -741,8 +741,7 @@ code {
   }
 
   .side,
-  .top-nav,
-  .only-wide {
+  .top-nav {
     display: none;
   }
 

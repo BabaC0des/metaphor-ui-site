@@ -17,9 +17,9 @@ const START = [
     mark: "rules",
   },
   {
-    title: "Repository",
-    says: "Source code and issues",
-    href: "https://github.com/BabaC0des/metaphor",
+    title: "The Storybook",
+    says: "Every component, and the wiki behind them",
+    href: "./storybook/",
     mark: "code",
   },
 ] as const;
